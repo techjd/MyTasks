@@ -1,6 +1,5 @@
 package com.techjd.mytasks.data.remote.dto.request.alltask
 
-
 import com.google.gson.annotations.SerializedName
 
 data class AllTaskRequest(

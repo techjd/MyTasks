@@ -1,6 +1,6 @@
 package com.techjd.mytasks.data.remote.dto.response.success
 
-
+import com.techjd.mytasks.domain.model.success.Success
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

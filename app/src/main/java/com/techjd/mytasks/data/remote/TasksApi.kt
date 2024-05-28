@@ -11,7 +11,6 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface TasksApi {
-
   @POST(Constants.STORE_TASK)
   suspend fun storeTask(@Body taskRequest: TaskRequest): Response<SuccessDto>
 

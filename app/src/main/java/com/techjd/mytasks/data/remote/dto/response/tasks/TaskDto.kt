@@ -1,6 +1,5 @@
 package com.techjd.mytasks.data.remote.dto.response.tasks
 
-
 import com.google.gson.annotations.SerializedName
 import com.techjd.mytasks.domain.model.tasks.Task
 

@@ -66,6 +66,7 @@ import com.techjd.mytasks.presentation.alltasks.SwipeDirection.RIGHT
 import com.techjd.mytasks.presentation.alltasks.components.AddTaskButton
 import com.techjd.mytasks.presentation.alltasks.components.CircularText
 import com.techjd.mytasks.presentation.alltasks.components.MyAlertDialog
+import com.techjd.mytasks.presentation.alltasks.components.MyCalendar
 import com.techjd.mytasks.presentation.alltasks.components.TaskItem
 import com.techjd.mytasks.presentation.alltasks.components.YourTasksHeader
 import com.techjd.mytasks.presentation.components.MyTopAppBar
@@ -85,11 +86,11 @@ fun HomeScreen(
   val context = LocalContext.current
   val lifeCycleOwner = LocalLifecycleOwner.current
 
-  var offsetX by rememberSaveable { mutableStateOf(0f) }
-  var swipeDirection by rememberSaveable { mutableStateOf(LEFT) }
-  var shouldShowSheet by rememberSaveable {
-    mutableStateOf(true)
-  }
+  // var offsetX by rememberSaveable { mutableStateOf(0f) }
+  // var swipeDirection by rememberSaveable { mutableStateOf(LEFT) }
+  // var shouldShowSheet by rememberSaveable {
+  //   mutableStateOf(true)
+  // }
 
   var openAlertDialog by rememberSaveable { mutableStateOf(false) }
 
@@ -144,98 +145,20 @@ fun HomeScreen(
           }
         }
       } else {
-        Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-          IconButton(onClick = {
-            allTasksViewModel.previous()
-          }) {
-            Icon(Filled.ArrowBack, contentDescription = "Previous")
-          }
-          Row(
-            modifier = Modifier
-              .clickable {
-                shouldShowSheet = !shouldShowSheet
-              }
-              .weight(1f),
-            verticalAlignment = Alignment.CenterVertically
-          ) {
-            Text(
-              text = "${
-                Utils.getMonthName(
-                  allTasksViewModel.currentMonth.value.month
-                )
-              } , ${allTasksViewModel.currentMonth.value.year}",
-              textAlign = TextAlign.Left,
-              style = MaterialTheme.typography.bodyLarge,
-              fontWeight = FontWeight.SemiBold
-            )
-            Spacer(modifier = Modifier.width(2.dp))
-            Icon(
-              if (shouldShowSheet) Filled.KeyboardArrowUp else Filled.KeyboardArrowDown,
-              contentDescription = "Open"
-            )
-          }
-          IconButton(onClick = {
+        MyCalendar(
+          onNext = {
             allTasksViewModel.next()
-          }) {
-            Icon(Filled.ArrowForward, contentDescription = "Next")
-          }
-        }
-
-        AnimatedVisibility(visible = shouldShowSheet) {
-          LazyVerticalGrid(
-            columns = Fixed(7),
-            contentPadding = PaddingValues(horizontal = 8.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier.pointerInput(Unit) {
-              detectHorizontalDragGestures(
-                onDragEnd = {
-                  if (swipeDirection == LEFT) {
-                    allTasksViewModel.next()
-                  } else {
-                    allTasksViewModel.previous()
-                  }
-                }
-              ) { change, dragAmount ->
-                offsetX += dragAmount
-                swipeDirection = if (dragAmount > 0) {
-                  RIGHT
-                } else {
-                  LEFT
-                }
-                change.consume()
-              }
-            }
-          ) {
-            items(listOf("S", "M", "T", "W", "T", "F", "S")) {
-              Box(
-                modifier = Modifier
-                  .size(30.dp)
-                  .clip(CircleShape), contentAlignment = Alignment.Center
-              ) {
-                Text(
-                  text = it, textAlign = TextAlign.Center,
-                  style = MaterialTheme.typography.bodyMedium,
-                  fontWeight = FontWeight.SemiBold
-                )
-              }
-            }
-            if (allTasksViewModel.dates.value.isNotEmpty()) {
-              val firstDayIndex = Utils.getIndex(allTasksViewModel.dates.value.first().dayOfWeek)
-              items(firstDayIndex) {
-                Text(text = "")
-              }
-            }
-
-            itemsIndexed(allTasksViewModel.dates.value) { index, item ->
-              CircularText(
-                dateInfo = item, areDateInfoSame(allTasksViewModel.selectedDate.value, item)
-              ) {
-                allTasksViewModel.changeSelectedDate(item)
-              }
-            }
-          }
-        }
+          },
+          onPrevious = {
+            allTasksViewModel.previous()
+          },
+          selectedDate = allTasksViewModel.selectedDate.value,
+          dates = allTasksViewModel.dates.value,
+          onDateSelected = { selectedDate ->
+            allTasksViewModel.changeSelectedDate(selectedDate)
+          },
+          currentMonth = allTasksViewModel.currentMonth.value
+        )
 
         if (allTasksViewModel.screenState.value.isLoading) {
           Box(modifier = Modifier.fillMaxSize()) {
