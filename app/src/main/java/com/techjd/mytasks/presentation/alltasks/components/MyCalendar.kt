@@ -40,9 +40,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.techjd.mytasks.domain.model.calendar.DateInfo
 import com.techjd.mytasks.domain.model.calendar.MonthYear
-import com.techjd.mytasks.presentation.alltasks.SwipeDirection.LEFT
-import com.techjd.mytasks.presentation.alltasks.SwipeDirection.RIGHT
 import com.techjd.mytasks.presentation.alltasks.areDateInfoSame
+import com.techjd.mytasks.presentation.alltasks.components.SwipeDirection.LEFT
+import com.techjd.mytasks.presentation.alltasks.components.SwipeDirection.RIGHT
 import com.techjd.mytasks.util.Utils
 
 @Composable
@@ -154,4 +154,9 @@ fun MyCalendar(
       }
     }
   }
+}
+
+internal enum class SwipeDirection {
+  RIGHT,
+  LEFT
 }
