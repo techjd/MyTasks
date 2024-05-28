@@ -74,15 +74,19 @@ dependencies {
   debugImplementation("androidx.compose.ui:ui-tooling")
   debugImplementation("androidx.compose.ui:ui-test-manifest")
 
+  // compose navigation
   implementation("androidx.navigation:navigation-compose:2.8.0-beta01")
   implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 
+  // dagger hilt
   implementation("com.google.dagger:hilt-android:2.50")
   kapt("com.google.dagger:hilt-android-compiler:2.50")
 
+  // retrofit
   implementation("com.squareup.retrofit2:retrofit:2.11.0")
   implementation("com.squareup.retrofit2:converter-gson:2.11.0")
 
+  // for hiltviewmodel()
   implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 
   // define a BOM and its version
@@ -92,12 +96,16 @@ dependencies {
   implementation("com.squareup.okhttp3:okhttp")
   implementation("com.squareup.okhttp3:logging-interceptor")
 
+  // for repeatOnLifecycle
   implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.0")
 
+  // junit5
   testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.2")
 
+  // mock web server
   testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
 
+  // for testing coroutines
   testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1")
 }
