@@ -1,12 +1,6 @@
-# My Tasks 
-
-## 🎥 Video
-[](https://github.com/techjd/MyTasks/assets/28820868/b9860bc8-dbf8-4ec1-b535-d6fe3eccf113)
-
+# My Tasks 📝
 
 ## 📸 Screenshots
-
-
 |   |   |   |
 |---|---|---|
 |![](screenshots/dark/1.png)|![](screenshots/dark/2.png)|![](screenshots/dark/3.png)
@@ -19,6 +13,9 @@
 |---|---|---|
 |![](screenshots/light/2.png)|![](screenshots/light/3.png)|![](screenshots/light/4.png)
 
+
+## 🎥 Video
+[](https://github.com/techjd/MyTasks/assets/28820868/b9860bc8-dbf8-4ec1-b535-d6fe3eccf113)
 
 
 
