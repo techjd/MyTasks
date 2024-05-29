@@ -58,12 +58,6 @@ fun HomeScreen(
   val context = LocalContext.current
   val lifeCycleOwner = LocalLifecycleOwner.current
 
-  var openAlertDialog by rememberSaveable { mutableStateOf(false) }
-
-  var selectedTaskToDelete by rememberSaveable {
-    mutableStateOf<Task?>(null)
-  }
-
   LaunchedEffect(shouldLoad) {
     if (shouldLoad) allTasksViewModel.getAllTasks()
   }
@@ -74,15 +68,15 @@ fun HomeScreen(
         allTasksViewModel.shareFlow.collect {
           when (it) {
             is Error -> {
-              openAlertDialog = false
-              selectedTaskToDelete = null
+              allTasksViewModel.openAlertDialog.value = false
+              allTasksViewModel.selectedTaskToDelete.value = null
               Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
             }
 
             Success -> {
               Log.d("AllTasksScreen", "HomeScreen: Close Dialog")
-              openAlertDialog = false
-              selectedTaskToDelete = null
+              allTasksViewModel.openAlertDialog.value = false
+              allTasksViewModel.selectedTaskToDelete.value = null
               Toast.makeText(context, "Task Removed SuccessFully", Toast.LENGTH_SHORT).show()
             }
           }
@@ -171,8 +165,8 @@ fun HomeScreen(
 
                 items(this.tasks) { task ->
                   TaskItem(task = task) {
-                    selectedTaskToDelete = task
-                    openAlertDialog = true
+                    allTasksViewModel.selectedTaskToDelete.value = task
+                    allTasksViewModel.openAlertDialog.value = true
                   }
                 }
               }
@@ -183,16 +177,16 @@ fun HomeScreen(
     }
   }
 
-  if (openAlertDialog) {
+  if (allTasksViewModel.openAlertDialog.value) {
     MyAlertDialog(
       onDismissRequest = {
         if (!allTasksViewModel.screenState.value.isHittingDeleteApi) {
-          openAlertDialog = false
+          allTasksViewModel.openAlertDialog.value = false
         } else {
-          openAlertDialog = true
+          allTasksViewModel.openAlertDialog.value = true
         }
       }, onConfirmation = {
-      selectedTaskToDelete?.let {
+      allTasksViewModel.selectedTaskToDelete.value?.let {
         allTasksViewModel.deleteTask(it.taskId)
       }
     }, dialogTitle = "Do you want to delete this Task ?",

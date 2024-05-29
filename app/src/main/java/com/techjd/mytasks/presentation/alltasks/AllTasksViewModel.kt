@@ -7,11 +7,11 @@ import com.techjd.mytasks.data.NetworkResult.Error
 import com.techjd.mytasks.data.NetworkResult.Exception
 import com.techjd.mytasks.data.NetworkResult.Success
 import com.techjd.mytasks.data.remote.dto.response.tasks.toTasks
+import com.techjd.mytasks.domain.model.calendar.DateInfo
 import com.techjd.mytasks.domain.model.tasks.Task
 import com.techjd.mytasks.domain.model.tasks.Tasks
 import com.techjd.mytasks.domain.usecase.DeleteTaskUseCase
 import com.techjd.mytasks.domain.usecase.GetAllTasksUseCase
-import com.techjd.mytasks.domain.model.calendar.DateInfo
 import com.techjd.mytasks.util.Utils
 import com.techjd.mytasks.util.next
 import com.techjd.mytasks.util.previous
@@ -34,6 +34,12 @@ class AllTasksViewModel @Inject constructor(
 
   val screenState = mutableStateOf(AllTasksScreenState())
   var datesMap = mutableMapOf<Long, Int>()
+
+  var openAlertDialog = mutableStateOf(false)
+
+  var selectedTaskToDelete = mutableStateOf<Task?>(null)
+
+
 
   private val _sharedFlow: MutableSharedFlow<DeleteEvents> = MutableSharedFlow()
   val shareFlow: SharedFlow<DeleteEvents> = _sharedFlow
